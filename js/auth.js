@@ -129,10 +129,12 @@ const Auth = {
 
   updateUserBadge() {
     const session = this.getSession();
+    if (!session) return;
+    const roleLabel = ROLES[session.role]?.label || session.role;
+    const text = `${session.fullName || session.username} · ${roleLabel}`;
     const el = document.getElementById('current-user-badge');
-    if (el && session) {
-      const roleLabel = ROLES[session.role]?.label || session.role;
-      el.textContent = `${session.fullName || session.username} · ${roleLabel}`;
-    }
+    if (el) el.textContent = text;
+    const mobile = document.getElementById('current-user-badge-mobile');
+    if (mobile) mobile.textContent = session.fullName || session.username;
   },
 };

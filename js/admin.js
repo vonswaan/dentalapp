@@ -31,6 +31,7 @@ const AdminApp = {
       SettingsModule.init();
       BillingModule.init();
       this.setupNav();
+      this.setupMobileNav();
     } catch (err) {
       console.error('Module init error:', err);
     }
@@ -86,6 +87,9 @@ const AdminApp = {
     document.getElementById('dashboard-view')?.classList.remove('hidden');
     Auth.applyNavPermissions();
     Auth.updateUserBadge();
+    const title = document.getElementById('admin-title')?.textContent || 'Overview';
+    const mobileTitle = document.getElementById('admin-mobile-title');
+    if (mobileTitle) mobileTitle.textContent = title;
     this.renderDashboard();
   },
 
@@ -101,11 +105,53 @@ const AdminApp = {
         link.classList.add('active');
         document.querySelectorAll('.admin-panel').forEach((p) => p.classList.add('hidden'));
         document.getElementById(`panel-${panel}`)?.classList.remove('hidden');
-        document.getElementById('admin-title').textContent = link.textContent.trim();
+        const title = link.textContent.trim();
+        document.getElementById('admin-title').textContent = title;
+        const mobileTitle = document.getElementById('admin-mobile-title');
+        if (mobileTitle) mobileTitle.textContent = title;
+        this.closeSidebar();
         this.onPanelShow(panel);
       });
     });
   },
+
+  setupMobileNav() {
+    const sidebar = document.getElementById('admin-sidebar');
+    const overlay = document.getElementById('admin-sidebar-overlay');
+    const menuBtn = document.getElementById('admin-menu-btn');
+    if (!sidebar || !menuBtn) return;
+
+    const open = () => {
+      sidebar.classList.add('open');
+      overlay?.classList.remove('hidden');
+      overlay?.setAttribute('aria-hidden', 'false');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('admin-nav-open');
+    };
+
+    const close = () => {
+      sidebar.classList.remove('open');
+      overlay?.classList.add('hidden');
+      overlay?.setAttribute('aria-hidden', 'true');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('admin-nav-open');
+    };
+
+    this.closeSidebar = close;
+
+    menuBtn.addEventListener('click', () => {
+      if (sidebar.classList.contains('open')) close();
+      else open();
+    });
+
+    overlay?.addEventListener('click', close);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  },
+
+  closeSidebar() {},
 
   onPanelShow(panel) {
     if (panel === 'patients') PatientsModule.render();
