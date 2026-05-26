@@ -1,55 +1,40 @@
 # Von Dental Clinic Management System
 
-Clinic operations with a **simple file database** (all records in one place) or **browser backup** when offline.
+Full clinic operations in the browser with **localStorage**.
 
 ## Login accounts
 
 | Role | Username | Password | Access |
 |------|----------|----------|--------|
-| **Super Admin** | `superadmin` | `superadmin123` | Everything + user management + daily income |
+| **Super Admin** | `superadmin` | `superadmin123` | Everything + user management |
 | **Admin** | `admin` | `dental2026` | Clinic settings, dentists, schedules, services, operations |
 | **Staff** | `staff` | `staff2026` | Appointments, patients, receipts, med certs, inventory |
 
 Open `admin.html` to sign in.
 
-## Database (simple)
-
-All records are saved in **`database/clinic.json`**:
-
-- patients, appointments, receipts, inventory, users, settings, etc.
-
-**Start with database (recommended):**
-
-```bash
-cd dentalcare/api
-npm install
-npm start
-```
-
-Then open:
-
-- Public: http://localhost:3000/index.html  
-- Admin: http://localhost:3000/admin.html  
-
-Backup = copy `database/clinic.json`.
-
-See `database/schema.sql` for what fields are stored.
-
-### Without the server
-
-If you only open HTML files or use GitHub Pages, data stays in **browser localStorage** (per device, not shared).
-
 ## Modules
 
-- **Public site** — Online booking from available slots
-- **Appointments** — Walk-in booking, complete visit + payment
-- **Patient records** — Visits and medical notes
-- **Receipts & med certificates** — Print documents
-- **Inventory** — Stock and medicine billing
-- **Daily income** (Super Admin) — Day totals from receipts
-- **Clinic settings** — Dentists, schedules, services
-- **User access** (Super Admin) — Staff accounts
+- **Public site** — Online booking from available slots only
+- **Appointments** — Staff can add walk-in appointments with manual patient entry
+- **Patient records** — Full medical record & visit log
+- **Receipts & med certificates** — Create and print
+- **Inventory** — Stock in/out with audit log
+- **Clinic settings** (Admin+) — Clinic details, dentists, weekly schedules, services
+- **User access** (Super Admin) — Add/edit/disable users and roles
 
-## GitHub Pages note
+## Quick start
 
-Static hosting cannot write `clinic.json`. For a live site with a real shared database, host the `api` folder on a small Node host (Railway, Render, VPS) or keep using localStorage on Pages.
+```bash
+cd dentalcare
+npx serve .
+```
+
+- Public: http://localhost:3000  
+- Admin: http://localhost:3000/admin.html  
+
+## Super admin tasks
+
+1. **User access** — Create accounts for reception, dentists, managers
+2. **Clinic settings** — Update name, address, phone, booking slot interval
+3. **Dentists & schedules** — Edit profile, license, which days/hours they work
+4. **Services** — Add or update treatments and prices (shown on public site)
