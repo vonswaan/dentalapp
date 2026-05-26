@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Von Dental Clinic | Dental Care</title>
+  <meta name="description" content="Professional dental care — book your appointment online from available time slots." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/public.css" />
+</head>
+<body class="public-page">
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#home" class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-tooth"></i></span>
+        <span data-clinic-name>Von Dental</span>
+      </a>
+      <nav class="nav">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#book">Book</a>
+        <a href="admin.html" class="btn btn-sm btn-outline">Clinic System</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="public-hero" id="home">
+      <div class="container public-hero-grid public-hero-single">
+        <div>
+          <span class="hero-badge" style="background:rgba(255,255,255,0.15);color:#ccfbf1">
+            <i class="fa-solid fa-award"></i> Trusted dental care since 2010
+          </span>
+          <h1>Your smile deserves personalized care</h1>
+          <p class="public-hero-lead">
+            Choose from real-time available slots and book your visit online in minutes.
+          </p>
+          <div class="public-hero-actions">
+            <a href="#book" class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Book appointment</a>
+            <a href="#services" class="btn btn-outline">Explore services</a>
+          </div>
+        </div>
+        <div class="hero-info-cards">
+          <div class="hero-info-card"><i class="fa-solid fa-shield-heart"></i><div><strong>Safe &amp; sterile</strong><span>Hospital-grade protocols</span></div></div>
+          <div class="hero-info-card"><i class="fa-solid fa-clock"></i><div><strong>Live availability</strong><span>Pick an open slot online</span></div></div>
+          <div class="hero-info-card"><i class="fa-solid fa-user-doctor"></i><div><strong>Expert dentists</strong><span>General &amp; specialty care</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="trust-strip">
+      <div class="container trust-strip-inner">
+        <div class="trust-item"><strong>15K+</strong><span>Patients served</span></div>
+        <div class="trust-item"><strong>3</strong><span>Specialist dentists</span></div>
+        <div class="trust-item"><strong>4.9</strong><span>Patient rating</span></div>
+        <div class="trust-item"><strong>Mon–Sat</strong><span data-hours>8 AM – 6 PM</span></div>
+      </div>
+    </div>
+
+    <section class="public-section alt" id="services">
+      <div class="container">
+        <span class="section-label">Treatments</span>
+        <h2 class="section-title">Services &amp; pricing</h2>
+        <p class="section-desc">Transparent fees for preventive, cosmetic, and specialized dental care.</p>
+        <div class="services-row" id="services-grid"></div>
+      </div>
+    </section>
+
+    <section class="public-section" id="about">
+      <div class="container">
+        <span class="section-label">Our clinic</span>
+        <h2 class="section-title">Meet the team</h2>
+        <p class="section-desc">Licensed dentists with flexible schedules throughout the week.</p>
+        <div class="split-section">
+          <div class="team-compact" id="team-grid"></div>
+          <div class="contact-panel" id="contact">
+            <h3>Visit us</h3>
+            <div class="contact-line">
+              <i class="fa-solid fa-location-dot"></i>
+              <div><strong>Address</strong><span data-address>123 Health Avenue, Makati City</span></div>
+            </div>
+            <div class="contact-line">
+              <i class="fa-solid fa-phone"></i>
+              <div><strong>Phone</strong><span data-phone>+63 2 8123 4567</span></div>
+            </div>
+            <div class="contact-line">
+              <i class="fa-solid fa-envelope"></i>
+              <div><strong>Email</strong><span data-email>hello@von.dental</span></div>
+            </div>
+            <div class="contact-line">
+              <i class="fa-solid fa-clock"></i>
+              <div><strong>Hours</strong><span data-hours>Mon–Sat 8:00 AM – 6:00 PM</span></div>
+            </div>
+            <a href="#book" class="btn btn-primary" style="margin-top:8px;width:100%">Book online</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking-band" id="book">
+      <div class="container">
+        <span class="section-label">Appointments</span>
+        <h2 class="section-title">Book your visit</h2>
+        <p class="section-desc">Select your service, dentist, date, and an available time slot.</p>
+
+        <div class="booking-layout booking-layout-single">
+          <aside class="booking-aside">
+            <div class="booking-aside-card">
+              <h3>Online booking</h3>
+              <ul>
+                <li><span class="num">1</span><span>Choose your treatment and preferred dentist.</span></li>
+                <li><span class="num">2</span><span>Pick a date — fully booked days are disabled.</span></li>
+                <li><span class="num">3</span><span>Choose a time — booked slots are disabled.</span></li>
+                <li><span class="num">4</span><span>Receive confirmation from our team within 2 hours.</span></li>
+              </ul>
+            </div>
+          </aside>
+
+          <div class="booking-panel">
+            <div class="booking-form-body">
+              <form id="booking-form">
+                <div class="form-section-title">Your information</div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="name">Full name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Juan Dela Cruz" />
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+63 9XX XXX XXXX" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" required placeholder="you@email.com" />
+                </div>
+                <div class="form-section-title">Appointment details</div>
+                <div class="form-group">
+                  <label for="service">Service *</label>
+                  <select id="service" name="service" required></select>
+                </div>
+                <div class="form-group">
+                  <label for="dentist">Preferred dentist</label>
+                  <select id="dentist" name="dentist"></select>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="appointment-date">Date *</label>
+                    <select id="appointment-date" name="date" required>
+                      <option value="">Select a service first</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="appointment-time">Time *</label>
+                    <select id="appointment-time" name="time" required disabled>
+                      <option value="">Select a date first</option>
+                    </select>
+                  </div>
+                </div>
+                <p id="slot-hint" class="slot-hint" style="display:none"></p>
+                <div class="form-group">
+                  <label for="notes">Notes (optional)</label>
+                  <textarea id="notes" name="notes" rows="2" placeholder="Allergies or concerns"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%">
+                  <i class="fa-solid fa-check"></i> Confirm booking
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="public-footer">
+    <div class="container">
+      <div class="public-footer-grid">
+        <div>
+          <div class="logo" style="margin-bottom:14px;color:#fff">
+            <span class="logo-icon"><i class="fa-solid fa-tooth"></i></span>
+            <span data-clinic-name>Von Dental</span>
+          </div>
+          <p style="font-size:0.9rem;max-width:320px">Book online from live appointment availability.</p>
+        </div>
+        <div>
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#book">Book online</a></li>
+            <li><a href="admin.html">Staff portal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><span data-phone></span></li>
+            <li><span data-email></span></li>
+            <li><span data-address></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="public-footer-bottom">
+        <p>&copy; 2026 <span data-clinic-name>Von Dental Clinic</span>. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/booking-slots.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clinic Management | Von Dental</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="admin-body">
+  <div id="login-view" class="admin-login">
+    <div class="login-card">
+      <div class="logo" style="justify-content:center;margin-bottom:24px">
+        <span class="logo-icon"><i class="fa-solid fa-tooth"></i></span>
+        <span>Clinic System</span>
+      </div>
+      <h1>Sign in</h1>
+      <p>Patient records, billing, inventory, and appointments.</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">Login</button>
+      </form>
+      <p class="form-hint" style="text-align:center;margin-top:16px;font-size:0.85rem">
+        <strong>Super Admin:</strong> <code>superadmin</code> / <code>superadmin123</code><br/>
+        Admin: <code>admin</code> / <code>dental2026</code> · Staff: <code>staff</code> / <code>staff2026</code>
+      </p>
+      <p style="text-align:center;margin-top:16px">
+        <a href="index.html" style="color:var(--primary);font-size:0.9rem">&larr; Public website</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="dashboard-view" class="admin-layout hidden">
+    <aside class="admin-sidebar">
+      <div class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-tooth"></i></span>
+        <span>Clinic System</span>
+      </div>
+      <nav class="admin-nav">
+        <a href="#" class="active" data-panel="overview" data-permission="appointments"><i class="fa-solid fa-chart-pie"></i> Overview</a>
+        <a href="#" data-panel="appointments" data-permission="appointments"><i class="fa-solid fa-calendar-days"></i> Appointments</a>
+        <a href="#" data-panel="patients" data-permission="patients"><i class="fa-solid fa-folder-open"></i> Patient records</a>
+        <a href="#" data-panel="receipts" data-permission="receipts"><i class="fa-solid fa-receipt"></i> Receipts</a>
+        <a href="#" data-panel="medcerts" data-permission="medcerts"><i class="fa-solid fa-file-medical"></i> Med certificates</a>
+        <a href="#" data-panel="inventory" data-permission="inventory"><i class="fa-solid fa-boxes-stacked"></i> Inventory</a>
+        <a href="#" data-panel="finance" data-permission="finance"><i class="fa-solid fa-chart-line"></i> Daily income</a>
+        <a href="#" data-panel="settings" data-permission="settings"><i class="fa-solid fa-gear"></i> Clinic settings</a>
+        <a href="#" data-panel="users" data-permission="users"><i class="fa-solid fa-users-gear"></i> User access</a>
+      </nav>
+      <div style="padding:24px">
+        <a href="index.html" style="color:#99f6e4;font-size:0.85rem;display:block;margin-bottom:12px"><i class="fa-solid fa-globe"></i> Public site</a>
+        <button type="button" id="logout-btn" class="btn btn-sm btn-outline" style="width:100%;border-color:#99f6e4;color:#fff">Logout</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1 id="admin-title">Overview</h1>
+        <span id="current-user-badge" class="form-hint"></span>
+      </div>
+
+      <!-- Overview -->
+      <div id="panel-overview" class="admin-panel">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="label">Pending appointments</div>
+            <div class="value" id="stat-pending">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Today's schedule</div>
+            <div class="value" id="stat-today">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Registered patients</div>
+            <div class="value" id="stat-patients">0</div>
+          </div>
+          <div class="stat-card stat-warn">
+            <div class="label">Low stock items</div>
+            <div class="value" id="stat-low-stock">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Total receipts (all time)</div>
+            <div class="value" id="stat-revenue" style="font-size:1.25rem">₱0.00</div>
+          </div>
+          <div class="stat-card stat-income" data-permission="finance">
+            <div class="label">Today's income</div>
+            <div class="value" id="stat-today-income" style="font-size:1.25rem;color:var(--primary)">₱0.00</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Recent appointments</h2>
+            <a href="#" class="btn btn-sm btn-primary" onclick="document.querySelector('[data-panel=appointments]').click();return false">View all</a>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr><th>Patient</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th></tr>
+              </thead>
+              <tbody id="appointments-overview-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appointments -->
+      <div id="panel-appointments" class="admin-panel hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Appointments</h2>
+            <div class="filter-bar">
+              <button type="button" class="btn btn-primary btn-sm" id="btn-new-appointment">
+                <i class="fa-solid fa-plus"></i> New appointment
+              </button>
+              <select id="filter-status">
+                <option value="">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <input type="date" id="filter-date" />
+            </div>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th><th>Phone</th><th>Service</th><th>Dentist</th>
+                  <th>Date</th><th>Time</th><th>Status</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="appointments-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Patients -->
+      <div id="panel-patients" class="admin-panel hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Patient records</h2>
+            <div class="filter-bar">
+              <input type="search" id="patient-search" placeholder="Search name, email, phone, ID..." />
+              <button type="button" class="btn btn-primary btn-sm" id="btn-add-patient"><i class="fa-solid fa-user-plus"></i> Register patient</button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient ID</th><th>Name</th><th>Phone</th><th>Email</th>
+                  <th>Visits</th><th>Appointments</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="patients-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Receipts -->
+      <div id="panel-receipts" class="admin-panel hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Official receipts</h2>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-new-receipt"><i class="fa-solid fa-plus"></i> New receipt</button>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr><th>OR No.</th><th>Date</th><th>Patient</th><th>Total</th><th>Payment</th><th>Print</th></tr>
+              </thead>
+              <tbody id="receipts-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Med certs -->
+      <div id="panel-medcerts" class="admin-panel hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Medical certificates</h2>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-new-medcert"><i class="fa-solid fa-plus"></i> New certificate</button>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr><th>Cert No.</th><th>Date</th><th>Patient</th><th>Diagnosis</th><th>Rest days</th><th>Print</th></tr>
+              </thead>
+              <tbody id="medcerts-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory -->
+      <div id="panel-inventory" class="admin-panel hidden">
+        <div class="panel-split">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Inventory</h2>
+              <div class="filter-bar">
+                <input type="search" id="inventory-search" placeholder="Search SKU or name..." />
+                <select id="inventory-filter">
+                  <option value="">All categories</option>
+                  <option value="Consumables">Consumables</option>
+                  <option value="Medication">Medication</option>
+                  <option value="Materials">Materials</option>
+                  <option value="Equipment">Equipment</option>
+                  <option value="low">Low stock only</option>
+                </select>
+                <button type="button" class="btn btn-primary btn-sm" id="btn-add-inventory"><i class="fa-solid fa-plus"></i> Add item</button>
+              </div>
+            </div>
+            <div class="panel-body">
+              <table>
+                <thead>
+                  <tr>
+                    <th>SKU</th><th>Item</th><th>Category</th><th>Stock</th>
+                    <th>Reorder</th><th>Cost</th><th>Status</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="inventory-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h2>Recent stock movements</h2></div>
+            <div class="panel-body">
+              <table class="compact-table">
+                <thead>
+                  <tr><th>Date</th><th>Item</th><th>Type</th><th>Qty</th><th>Reason</th></tr>
+                </thead>
+                <tbody id="inventory-logs-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily income (super admin) -->
+      <div id="panel-finance" class="admin-panel hidden">
+        <div class="stats-grid" style="margin-bottom:24px">
+          <div class="stat-card stat-income">
+            <div class="label">Selected day total</div>
+            <div class="value" id="finance-day-total" style="font-size:1.35rem;color:var(--primary)">₱0.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Transactions</div>
+            <div class="value" id="finance-day-count">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Average per visit</div>
+            <div class="value" id="finance-day-avg" style="font-size:1.1rem">—</div>
+          </div>
+        </div>
+        <div class="panel-split">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Last 7 days</h2>
+            </div>
+            <div class="panel-body">
+              <div id="finance-week-chart" class="finance-week-chart"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h2>By payment method</h2>
+            </div>
+            <div class="panel-body" id="finance-by-method"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:24px">
+          <div class="panel-header">
+            <h2>Daily transactions</h2>
+            <div class="filter-bar">
+              <label class="form-hint" style="align-self:center">Date</label>
+              <input type="date" id="finance-date" />
+            </div>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>OR No.</th><th>Patient</th><th>Treatment / notes</th>
+                  <th>Amount</th><th>Payment</th><th>Items</th>
+                </tr>
+              </thead>
+              <tbody id="finance-daily-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings (clinic, dentists, services) -->
+      <div id="panel-settings" class="admin-panel hidden">
+        <div class="panel" style="margin-bottom:24px">
+          <div class="panel-header">
+            <h2>Clinic details</h2>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-save-settings">Save settings</button>
+          </div>
+          <div class="panel-body" style="padding:24px">
+            <form id="clinic-settings-form" class="form-grid-2">
+              <div class="form-group"><label>Clinic name</label><input name="clinicName" required /></div>
+              <div class="form-group"><label>Phone</label><input name="phone" required /></div>
+              <div class="form-group"><label>Email</label><input type="email" name="email" /></div>
+              <div class="form-group"><label>TIN</label><input name="tin" /></div>
+              <div class="form-group form-full"><label>Address</label><input name="address" /></div>
+              <div class="form-group"><label>Public hours text</label><input name="hours" placeholder="Mon–Sat 8:00 AM – 6:00 PM" /></div>
+              <div class="form-group"><label>Booking slot (minutes)</label><input type="number" name="slotMinutes" min="15" max="60" step="5" /></div>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel panel-split" data-permission="dentists">
+          <div>
+            <div class="panel-header">
+              <h2>Dentists &amp; schedules</h2>
+              <button type="button" class="btn btn-primary btn-sm" id="btn-add-dentist"><i class="fa-solid fa-plus"></i> Add dentist</button>
+            </div>
+            <div class="panel-body">
+              <table>
+                <thead>
+                  <tr><th>Name</th><th>Specialty</th><th>License</th><th>Days</th><th>Phone</th><th></th></tr>
+                </thead>
+                <tbody id="dentists-admin-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:24px" data-permission="services">
+          <div class="panel-header">
+            <h2>Services &amp; pricing</h2>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-add-service"><i class="fa-solid fa-plus"></i> Add service</button>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr><th>Service</th><th>Duration</th><th>Price</th><th></th></tr>
+              </thead>
+              <tbody id="services-edit-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users (super admin) -->
+      <div id="panel-users" class="admin-panel hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>User access management</h2>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-add-user"><i class="fa-solid fa-user-plus"></i> Add user</button>
+          </div>
+          <div class="panel-body">
+            <table>
+              <thead>
+                <tr><th>Username</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/booking-slots.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/patients-module.js"></script>
+  <script src="js/appointments-module.js"></script>
+  <script src="js/documents-module.js"></script>
+  <script src="js/inventory-module.js"></script>
+  <script src="js/users-module.js"></script>
+  <script src="js/settings-module.js"></script>
+  <script src="js/billing-module.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
