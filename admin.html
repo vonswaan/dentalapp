@@ -41,7 +41,8 @@
   </div>
 
   <div id="dashboard-view" class="admin-layout hidden">
-    <aside class="admin-sidebar">
+    <div id="admin-sidebar-overlay" class="admin-sidebar-overlay hidden" aria-hidden="true"></div>
+    <aside class="admin-sidebar" id="admin-sidebar">
       <div class="logo">
         <span class="logo-icon"><i class="fa-solid fa-tooth"></i></span>
         <span>Clinic System</span>
@@ -63,7 +64,16 @@
       </div>
     </aside>
 
-    <main class="admin-main">
+    <div class="admin-content">
+      <header class="admin-topbar">
+        <button type="button" id="admin-menu-btn" class="admin-menu-btn" aria-label="Open menu" aria-expanded="false">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <span id="admin-mobile-title" class="admin-mobile-title">Overview</span>
+        <span id="current-user-badge-mobile" class="admin-topbar-badge"></span>
+      </header>
+
+      <main class="admin-main">
       <div class="admin-header">
         <h1 id="admin-title">Overview</h1>
         <span id="current-user-badge" class="form-hint"></span>
@@ -376,6 +386,7 @@
         </div>
       </div>
     </main>
+    </div>
   </div>
 
   <script src="js/storage.js"></script>
